@@ -59,7 +59,7 @@ LIBS	:= -lnx -lfatdrive-cppd
 # list of directories containing libraries, this must be the top level containing
 # include and lib
 #---------------------------------------------------------------------------------
-LIBDIRS	:= $(PORTLIBS) $(LIBNX) ../fatdrive-cpp/
+LIBDIRS	:= $(PORTLIBS) $(LIBNX) $(CURDIR)/../fatdrive-cpp
 
 
 #---------------------------------------------------------------------------------

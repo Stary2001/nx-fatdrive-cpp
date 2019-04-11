@@ -16,7 +16,7 @@ extern "C"
 #include <stdio.h>
 #include <string.h>
 #include <switch.h>
-#include <scsi/scsi_context.h>
+#include "scsi/scsi_context.h"
 
 /* Definitions of physical drive number for each drive */
 #define DEV_USB		0	/* Example: Map Ramdisk to physical drive 0 */

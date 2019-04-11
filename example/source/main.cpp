@@ -1,13 +1,11 @@
-// Include the most common headers from the C standard library
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
 #include "ff.h"
 
-// Include the main libnx system header, for Switch development
 #include <switch.h>
-#include <scsi/scsi_context.h>
+#include "scsi/scsi_context.h"
 
 Result search_and_open_endpoint(UsbHsClientIfSession *session, struct usb_endpoint_descriptor *descs, UsbHsClientEpSession *endpoint)
 {
