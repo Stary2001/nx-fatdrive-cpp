@@ -67,6 +67,14 @@ int ScsiBlock::read_sectors(uint8_t *buffer, uint32_t sector_offset, uint32_t nu
     return num_sectors;
 }
 
+int ScsiBlock::write_sectors(const uint8_t *buffer, uint32_t sector_offset, uint32_t num_sectors)
+{
+    ScsiWrite10Command write_ten(sector_offset, block_size, num_sectors);
+    ScsiCommandStatus status = device->transfer_cmd(&write_ten, (uint8_t*)buffer, num_sectors * block_size);
+    printf("Write 10 response: %x\n", status.status);
+
+    return num_sectors;
+}
 
 ScsiBlockPartition::ScsiBlockPartition(ScsiBlock *block_, MBRPartition partition_info)
 {
@@ -79,4 +87,10 @@ int ScsiBlockPartition::read_sectors(uint8_t *buffer, uint32_t sector_offset, ui
 {
 	// TODO: assert we don't read outside the partition
 	return block->read_sectors(buffer, sector_offset + start_lba_offset, num_sectors);
+}
+
+int ScsiBlockPartition::write_sectors(const uint8_t *buffer, uint32_t sector_offset, uint32_t num_sectors)
+{
+    // TODO: assert we don't write (!!) outside the partition
+    return block->write_sectors(buffer, sector_offset + start_lba_offset, num_sectors);
 }

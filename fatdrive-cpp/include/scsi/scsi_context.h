@@ -60,6 +60,7 @@ public:
 	ScsiBlockPartition() {}
 	ScsiBlockPartition(ScsiBlock *block_, MBRPartition partition_info);
 	int read_sectors(uint8_t *buffer, uint32_t sector_offset, uint32_t num_sectors);
+	int write_sectors(const uint8_t *buffer, uint32_t sector_offset, uint32_t num_sectors);
 };
 
 class ScsiBlock
@@ -74,4 +75,5 @@ public:
 	ScsiDevice *device;
 	ScsiBlock(ScsiDevice *device_);
 	int read_sectors(uint8_t *buffer, uint32_t sector_offset, uint32_t num_sectors);
+	int write_sectors(const uint8_t *buffer, uint32_t sector_offset, uint32_t num_sectors);
 };

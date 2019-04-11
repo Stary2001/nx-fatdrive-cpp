@@ -197,6 +197,36 @@ public:
 	}
 };
 
+class ScsiWrite10Command : public ScsiCommand
+{
+public:
+	uint8_t opcode;
+	uint32_t block_address;
+	uint16_t transfer_blocks;
+
+	ScsiWrite10Command(uint32_t block_address_, uint32_t block_size, uint16_t transfer_blocks_) :
+	ScsiCommand(transfer_blocks_ * block_size, ScsiDirection::Out, 0, /* length */ 10)
+	{
+		opcode = 0x2a;
+		block_address = block_address_;
+		transfer_blocks = transfer_blocks_;
+	}
+
+	virtual void to_bytes(uint8_t *out)
+	{
+		ScsiBuffer b;
+		write_header(b);
+		b.write_u8(opcode);
+		b.padding(1);
+		b.write_u32_be(block_address);
+		b.padding(1);
+		b.write_u16_be(transfer_blocks);
+		b.padding(1);
+
+		memcpy(out, b.storage, 31);
+	}
+};
+
 
 class ScsiCommandStatus
 {

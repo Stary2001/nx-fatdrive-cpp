@@ -149,13 +149,28 @@ Result usb_test()
                 printf("f_readdir failed! %i\n", r);
                 break;
             }
-            if(finfo.fname != nullptr)
+
+            if(finfo.fname != nullptr && strlen(finfo.fname) != 0)
             {
                 printf("%s\n", finfo.fname);
             }
         }
         while(finfo.fname != nullptr && strlen(finfo.fname) != 0);
         f_closedir(&dirinfo);
+
+        FIL f;
+        r = f_open(&f, "0:/test.txt", FA_CREATE_NEW | FA_WRITE);
+        if(r != FR_OK)
+        {
+            printf("f_open failed %i\n", r);
+        }
+        unsigned int written;
+        char *s = "testing\ntesting\n";
+        f_write(&f, s, strlen(s), &written);
+        printf("wrote %i bytes\n", written);
+        f_close(&f);
+
+        f_mount(NULL, "0", 0);
     }
 
 //cleanup_out:

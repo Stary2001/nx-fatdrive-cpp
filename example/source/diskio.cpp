@@ -118,11 +118,7 @@ extern "C" DRESULT disk_write (
 
 	switch (pdrv) {
 	case DEV_USB :
-		// translate the arguments here
-
-		result = USB_disk_write(buff, sector, count);
-
-		// translate the reslut code here
+		result = fatfs_block_dev->write_sectors(buff, sector, count);
 		if(result != 0)
 			return RES_OK;
 	}
